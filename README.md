@@ -39,7 +39,7 @@ Using the data structure from Question 1, please generate letter files following
 #### 4. Build Report
 Based on the letter files created or generated before, Santa needs to build a report for the Toy Factory. 
 
-The report needs to highlight home many of each toy the elves need to build. Report format: Toy Name - Quantity
+The report needs to highlight how many of each toy the elves need to build. Report format: Toy Name - Quantity
 
 The report needs to be ordered decending by quantity
 
