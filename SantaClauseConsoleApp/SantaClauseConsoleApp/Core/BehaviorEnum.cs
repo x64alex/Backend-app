@@ -7,3 +7,4 @@ namespace SantaClauseConsoleApp
         Bad = 1
     }
 }
+
