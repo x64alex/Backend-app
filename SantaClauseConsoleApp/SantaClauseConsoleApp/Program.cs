@@ -34,17 +34,19 @@ namespace SantaClauseConsoleApp
             Letter l1 = new(0,"Hello Santa!", "01.12.2021",toy1,toy2);
             Letter l2 = new(1,"Hello!","10.12.2021",toy1,toy2);
             Letter l3 = new(2,"Hello!","10.12.2021",toy1,toy2);
+            Console.WriteLine(l1.text);
+            Console.WriteLine(l2.text);
+            Console.WriteLine(l3.text);
 
+        }
 
-        }		
-
-                static void Question2()
+        static void Question2()
         {
             Console.WriteLine("\nQ2:");
             //Path is the place where the text files are located
-            string path1 = @"C:\Users\Alex\source\repos\WinterInternship2022-Backend\SantaClauseConsoleApp\SantaClauseConsoleApp\letters\1.txt";
-            string path2 = @"C:\Users\Alex\source\repos\WinterInternship2022-Backend\SantaClauseConsoleApp\SantaClauseConsoleApp\letters\2.txt";
-            string path3 = @"C:\Users\Alex\source\repos\WinterInternship2022-Backend\SantaClauseConsoleApp\SantaClauseConsoleApp\letters\3.txt";
+            string path1 = @"/Users/stefaniabumbu/Downloads/Backend-app-main/SantaClauseConsoleApp/SantaClauseConsoleApp/letters/1.txt";
+            string path2 = @"/Users/stefaniabumbu/Downloads/Backend-app-main/SantaClauseConsoleApp/SantaClauseConsoleApp/letters/2.txt";
+            string path3 = @"/Users/stefaniabumbu/Downloads/Backend-app-main/SantaClauseConsoleApp/SantaClauseConsoleApp/letters/3.txt";
 
             string file1 = File.ReadAllText(path1);
             string file2 = File.ReadAllText(path2);
@@ -100,13 +102,13 @@ namespace SantaClauseConsoleApp
         static void Question3()
         {
             //Path is the place where the letter format is located
-            string path = @"C:\Users\Alex\source\repos\WinterInternship2022-Backend\SantaClauseConsoleApp\SantaClauseConsoleApp\letter-template.txt";
+            string path = @"/Users/stefaniabumbu/Downloads/Backend-app-main/SantaClauseConsoleApp/SantaClauseConsoleApp/letter-template.txt";
             //Path where the text file will be created
-            string pathNew = @"C:\Users\Alex\source\repos\WinterInternship2022-Backend\SantaClauseConsoleApp\SantaClauseConsoleApp\letters\Q3.txt";
+            string pathNew = @"/Users/stefaniabumbu/Downloads/Backend-app-main/SantaClauseConsoleApp/SantaClauseConsoleApp/letters/Q3.txt";
             string format = File.ReadAllText(path);
 
-            Item toy1 = new("toy", "Lego");
-            Item toy2 = new("toy", "Iron Man");
+            Item toy1 = new(0,"toy", "Lego");
+            Item toy2 = new(1,"toy", "Iron Man");
             Letter l1 = new(0,"Hello Santa!", "01.12.2021",toy1,toy2);
             Child child1 = new(0,"Alex", "1.1.2010", "Bratianu, Dej");
 
@@ -125,9 +127,9 @@ namespace SantaClauseConsoleApp
         {
             Console.WriteLine("\nQ5:");
             //Path where the files are located
-            string path1 = @"C:\Users\Alex\source\repos\WinterInternship2022-Backend\SantaClauseConsoleApp\SantaClauseConsoleApp\letters\1.txt";
-            string path2 = @"C:\Users\Alex\source\repos\WinterInternship2022-Backend\SantaClauseConsoleApp\SantaClauseConsoleApp\letters\2.txt";
-            string path3 = @"C:\Users\Alex\source\repos\WinterInternship2022-Backend\SantaClauseConsoleApp\SantaClauseConsoleApp\letters\3.txt";
+            string path1 = @"/Users/stefaniabumbu/Downloads/Backend-app-main/SantaClauseConsoleApp/SantaClauseConsoleApp/letters/1.txt";
+            string path2 = @"/Users/stefaniabumbu/Downloads/Backend-app-main/SantaClauseConsoleApp/SantaClauseConsoleApp/letters/2.txt";
+            string path3 = @"/Users/stefaniabumbu/Downloads/Backend-app-main/SantaClauseConsoleApp/SantaClauseConsoleApp/letters/3.txt";
 
             string file1 = File.ReadAllText(path1);
             string file2 = File.ReadAllText(path2);
@@ -136,12 +138,13 @@ namespace SantaClauseConsoleApp
             static string toys(string file)
             {
                 string toys = file.Split("is:")[1];
-                return toys.Remove(0,2);
+                return toys.Remove(0,1);
             }
             string[] list_toys = {toys(file1),toys(file2),toys(file3)};
 
             string toyReport = "";
             string toysList = "";
+            //Find the list of toys
             foreach(string toy in list_toys)
             {
                 string toy1 = toy.Split(",")[0];
@@ -172,10 +175,12 @@ namespace SantaClauseConsoleApp
 
             }
             toysList = toysList.Remove(toysList.Length - 1,1);
-            //Console.WriteLine(toysList);
+            Console.WriteLine(toysList);
 
+            //Find the unsorted report of toys
             string[] toysListArray = toysList.Split(",");
             int[] quantityList = new int[4];
+
             int i = 0;
             foreach(string t in toysListArray)
             {
@@ -197,21 +202,35 @@ namespace SantaClauseConsoleApp
             Console.WriteLine("Unsorted:");
             Console.WriteLine(toyReport);
 
-            string[] toyReportList = toyReport.Split("\n"); 
+            string[] toyReportList = toyReport.Split("\n");
+            string[] newToyList = new string[5];
 
             string newToyReport = "";
             Array.Sort(quantityList);
 
+            //Create the sorted report of toys
+            int j = 0;
             foreach(int num in quantityList)
             {
-                int ok = 1;
                 foreach (string toy in toyReportList)
                 {
                     int n = Int32.Parse(toy.Split(" - ")[1]);
-                    if(n == num && ok == 1)
+                    if(n == num)
                     {
-                        newToyReport = toy +"\n"+ newToyReport;
-                        ok = 0;
+                        int ok = 1;
+                        foreach(string newToy in newToyList)
+                        {
+                            if (newToy == toy)
+                            {
+                                ok = 0;
+                            }
+                        }
+                        if(ok == 1)
+                        {
+                            newToyReport = toy + "\n" + newToyReport;
+                            newToyList[j] = toy;
+                            j++;
+                        }
                     }
                 }
 
